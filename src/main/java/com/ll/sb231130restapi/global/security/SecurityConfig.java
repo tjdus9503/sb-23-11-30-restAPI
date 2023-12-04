@@ -54,7 +54,9 @@ public class SecurityConfig {
                 .logout(
                         logout -> logout
                                 //.logoutUrl("/member/logout") // post 요청만 처리
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // get 요청도 처리
+                                .logoutRequestMatcher(
+                                        new AntPathRequestMatcher("/member/logout")
+                                ) // get 요청도 처리
                 )
         ;
 
