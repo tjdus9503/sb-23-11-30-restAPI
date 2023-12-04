@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:rest2023_test;MODE=MYSQL
+  jpa:
+    hibernate:
+      ddl-auto: create # 메모리 모드라서 필요는 없지만, 명시적으로 작성
