@@ -7,6 +7,7 @@ import com.ll.sb231130restapi.global.rsData.RsData;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,5 +39,19 @@ public class ApiV1ArticlesController {
     @GetMapping("")
     public RsData<GetArticlesResponseBody> getArticles() {
         return RsData.of("200", "성공", new GetArticlesResponseBody(articleService.findAllByOrderByIdDesc()));
+    }
+
+    @Getter
+    public static class GetArticleResponseBody {
+        private final ArticleDto item;
+
+        public GetArticleResponseBody(Article article) {
+            item = new ArticleDto(article);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public RsData<GetArticleResponseBody> getArticle(@PathVariable("id") long id) {
+        return RsData.of("200", "성공", new GetArticleResponseBody(articleService.findById(id).get()));
     }
 }
