@@ -19,8 +19,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     @SneakyThrows
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
-        System.out.println("JwtAuthenticationFilter 실행");
-
         filterChain.doFilter(request, response);
     }
 }
