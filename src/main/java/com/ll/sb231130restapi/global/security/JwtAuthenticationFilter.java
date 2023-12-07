@@ -1,7 +1,7 @@
 package com.ll.sb231130restapi.global.security;
 
+import com.ll.sb231130restapi.domain.member.member.entity.Member;
 import com.ll.sb231130restapi.domain.member.member.service.MemberService;
-import com.ll.sb231130restapi.global.rq.Rq;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,12 +19,34 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final Rq rq;
     private final MemberService memberService;
 
     @Override
     @SneakyThrows
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+        String username = request.getParameter("username");
+
+        if (username != null) {
+            Member member = memberService.findByUsername(username).get();
+
+            User user = new User(
+                    member.getUsername(),
+                    member.getPassword(),
+                    List.of()
+            );
+
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                    user,
+                    user.getPassword(),
+                    user.getAuthorities()
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         User user = new User("user1", "", List.of());
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
