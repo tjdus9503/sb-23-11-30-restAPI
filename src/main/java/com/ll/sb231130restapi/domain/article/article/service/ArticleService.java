@@ -36,18 +36,18 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
-    @Transactional
-    public void modify(Article article, String title, String body) {
-        article.setTitle(title);
-        article.setBody(body);
-    }
-
     public List<Article> findAll() {
         return articleRepository.findAll();
     }
 
     public List<Article> findAllByOrderByIdDesc() {
         return articleRepository.findAllByOrderByIdDesc();
+    }
+
+    @Transactional
+    public void modify(Article article, String title, String body) {
+        article.setTitle(title);
+        article.setBody(body);
     }
 
     @Transactional
