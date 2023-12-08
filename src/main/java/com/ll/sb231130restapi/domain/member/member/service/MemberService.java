@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -66,5 +67,10 @@ public class MemberService {
                 "로그인 성공",
                 memberOp.get()
         );
+    }
+
+    @Transactional
+    public void regenApiKey(Member member) {
+        member.setApiKey(UUID.randomUUID().toString());
     }
 }
